@@ -22,21 +22,6 @@ function getGreeting() {
   return { text: 'Good Evening', emoji: '🌙', Icon: Moon, color: 'from-indigo-400 to-purple-500' };
 }
 
-import PropTypes from 'prop-types';
-TrainerDashboard.propTypes = {
-  progress: PropTypes.number,
-  size: PropTypes.number,
-  strokeWidth: PropTypes.number,
-  color: PropTypes.string,
-  label: PropTypes.string,
-  value: PropTypes.number,
-  delay: PropTypes.number,
-  targetDate: PropTypes.string,
-  sessions: PropTypes.array,
-  gradient: PropTypes.string,
-  onClick: PropTypes.func,
-  onTabChange: PropTypes.func,
-};
 
 const motivationalTips = [
   "Energy is contagious — bring yours to every session! 🔥",
@@ -233,7 +218,7 @@ function QuickNavCard({ icon: Icon, label, desc, gradient, onClick, delay = 0 })
    MAIN COMPONENT
    ═══════════════════════════════════════════════════════════════ */
 export default function TrainerDashboard({ onTabChange }) {
-  const [stats, setStats] = useState({});
+ // const [stats, setStats] = useState({});
   const [sessions, setSessions] = useState([]);
   const [classes, setClasses] = useState([]);
   const [tipIdx, setTipIdx] = useState(0);
@@ -241,7 +226,7 @@ export default function TrainerDashboard({ onTabChange }) {
 
   useEffect(() => {
     let mounted = true;
-    api.get('/api/stats').then((res) => { if (mounted) setStats(res.data); }).catch(() => null);
+    // api.get('/api/stats').then((res) => { if (mounted) setStats(res.data); }).catch(() => null);
     Promise.all([api.get('/api/trainer/sessions'), api.get('/api/trainer/classes')])
       .then(([s, c]) => { if (mounted) { setSessions(s.data || []); setClasses(c.data || []); } })
       .catch(() => null);
@@ -549,3 +534,8 @@ export default function TrainerDashboard({ onTabChange }) {
     </PageShell>
   );
 }
+import PropTypes from "prop-types";
+
+TrainerDashboard.propTypes = {
+  onTabChange: PropTypes.func,
+};

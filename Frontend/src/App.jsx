@@ -61,11 +61,7 @@ const roleConfig = {
 import PropTypes from 'prop-types';
 
 function PortalContent({ role, tab, onTabChange }) {
-  PortalContent.propTypes = {
-    role: PropTypes.string.isRequired,
-    tab: PropTypes.string.isRequired,
-    onTabChange: PropTypes.func.isRequired,
-  };
+  
   if (role === 'admin') {
     if (tab === 'dashboard') return <AdminDashboard onTabChange={onTabChange} />;
     if (tab === 'db') return <AdminDatabaseExplorer />;
@@ -175,3 +171,8 @@ export default function App() {
     </ToastProvider>
   );
 }
+PortalContent.propTypes = {
+  role: PropTypes.string.isRequired,
+  tab: PropTypes.string.isRequired,
+  onTabChange: PropTypes.func.isRequired,
+};

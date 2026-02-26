@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import PropTypes from 'prop-types';
 /* ─── Tab Reactions Config ─────────────────────────────────── */
 const tabReactions = {
   dashboard: { msg: "Let's crush it today! 💪", eyes: 'normal' },

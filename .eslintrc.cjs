@@ -31,6 +31,7 @@ module.exports = {
           'react-hooks/set-state-in-effect': 'off',
           'react-hooks/refs': 'off',
           'react/no-unescaped-entities': 'off',
+         'react/prop-types': 'off',
       },
     },
     {

@@ -289,6 +289,11 @@ let server;
    ═══════════════════════════════════════════════════════════════ */
 function gracefulShutdown(signal) {
   logger.info(`${signal} received — shutting down gracefully…`);
+  if (!server) {
+    mongoose.connection.close().catch(() => {});
+    process.exit(0);
+    return;
+  }
   server.close(async () => {
     try {
       await mongoose.connection.close();
@@ -310,10 +315,12 @@ process.on('SIGINT',  () => gracefulShutdown('SIGINT'));
 // Catch unhandled rejections/exceptions — log and exit
 process.on('unhandledRejection', (reason) => {
   logger.error('Unhandled Rejection', { err: reason });
-  server.close(() => process.exit(1));
+  if (server) server.close(() => process.exit(1));
+  else process.exit(1);
 });
 
 process.on('uncaughtException', (err) => {
   logger.error('Uncaught Exception', { err: err.message, stack: err.stack });
-  server.close(() => process.exit(1));
+  if (server) server.close(() => process.exit(1));
+  else process.exit(1);
 });

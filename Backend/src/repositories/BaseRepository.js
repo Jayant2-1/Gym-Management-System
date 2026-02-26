@@ -42,8 +42,13 @@ class BaseRepository {
 
   /* ─── Write ───────────────────────────────────────────── */
 
-  create(data, options = {}) {
-    return this.model.create(data, options);
+  async create(data, options = {}) {
+    if (options && Object.keys(options).length > 0) {
+      // When options are provided (e.g. session), use array form
+      const [doc] = await this.model.create([data], options);
+      return doc;
+    }
+    return this.model.create(data);
   }
 
   update(id, data, options = {}) {

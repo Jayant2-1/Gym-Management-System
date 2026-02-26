@@ -55,7 +55,7 @@ describe('BaseRepository', () => {
   describe('create', () => {
     it('should delegate to model.create', async () => {
       await repo.create({ name: 'Test' });
-      expect(model.create).toHaveBeenCalledWith({ name: 'Test' }, {});
+      expect(model.create).toHaveBeenCalledWith({ name: 'Test' });
     });
   });
 

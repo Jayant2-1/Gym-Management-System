@@ -11,27 +11,31 @@ env:
   DOCKER_IMAGE: fitflex-gym
 
 jobs:
-  # ─── Lint ──────────────────────────────────────────────────
+
+  # ─── Lint ────────────────────────────────────────────────
   lint:
     name: Lint
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: npm
 
-      - name: Install dependencies
+      - name: Install dependencies (all workspaces)
         run: npm ci --workspaces --include-workspace-root
 
       - name: Run ESLint
-        run: npx eslint . --ext .js,.jsx --max-warnings 10
+        run: npm run lint
 
       - name: Check Prettier formatting
-        run: npx prettier . --check
+        run: npm run format:check
 
-  # ─── Test (Backend) ────────────────────────────────────────
+
+  # ─── Backend Tests ───────────────────────────────────────
   test-backend:
     name: Backend Tests
     runs-on: ubuntu-latest
@@ -40,7 +44,8 @@ jobs:
     services:
       mongo:
         image: mongo:7
-        ports: ['27017:27017']
+        ports:
+          - 27017:27017
         options: >-
           --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'"
           --health-interval 10s
@@ -54,49 +59,41 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: npm
 
       - name: Install Backend dependencies
         run: npm ci --workspace=Backend
 
       - name: Run unit tests
-        run: cd Backend && npm test -- --coverage --forceExit --detectOpenHandles
+        run: npm --workspace=Backend test -- --coverage --forceExit --detectOpenHandles
 
-      - name: Upload coverage
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-coverage
-          path: Backend/coverage/
 
-  # ─── Build (Frontend) ─────────────────────────────────────
+  # ─── Build Frontend ──────────────────────────────────────
   build-frontend:
     name: Build Frontend
     runs-on: ubuntu-latest
     needs: lint
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: npm
 
       - name: Install Frontend dependencies
         run: npm ci --workspace=Frontend
 
       - name: Build
-        run: cd Frontend && npm run build
+        run: npm --workspace=Frontend run build
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-dist
-          path: Frontend/dist/
 
-  # ─── Docker Build ──────────────────────────────────────────
+  # ─── Docker Build ────────────────────────────────────────
   docker:
     name: Docker Build
     runs-on: ubuntu-latest
@@ -114,6 +111,8 @@ jobs:
         with:
           context: .
           push: false
-          tags: ${{ env.DOCKER_IMAGE }}:${{ github.sha }},${{ env.DOCKER_IMAGE }}:latest
+          tags: |
+            ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+            ${{ env.DOCKER_IMAGE }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max

@@ -28,10 +28,10 @@ module.exports = {
       extends: ['plugin:react/recommended', 'plugin:react-hooks/recommended'],
       settings: { react: { version: 'detect' } },
       rules: {
-          'react-hooks/set-state-in-effect': 'off',
-          'react-hooks/refs': 'off',
-          'react/no-unescaped-entities': 'off',
-         'react/prop-types': 'off',
+        'react-hooks/set-state-in-effect': 'off',
+        'react-hooks/refs': 'off',
+        'react/no-unescaped-entities': 'off',
+        'react/prop-types': 'off',
       },
     },
     {

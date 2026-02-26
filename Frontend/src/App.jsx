@@ -61,7 +61,6 @@ const roleConfig = {
 import PropTypes from 'prop-types';
 
 function PortalContent({ role, tab, onTabChange }) {
-  
   if (role === 'admin') {
     if (tab === 'dashboard') return <AdminDashboard onTabChange={onTabChange} />;
     if (tab === 'db') return <AdminDatabaseExplorer />;

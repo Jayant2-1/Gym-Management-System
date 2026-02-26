@@ -66,7 +66,7 @@ export default function AdminDatabaseExplorer() {
   useEffect(() => {
     loadTables();
     
-  }, []);
+  }, [loadTables]);
 
   useEffect(() => {
     loadRows(selectedTable);

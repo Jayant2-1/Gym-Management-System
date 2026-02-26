@@ -38,12 +38,12 @@
                      └─────────────┘
 ```
 
-| Layer | Responsibility | Example |
-|-------|---------------|---------|
-| **Routes** | HTTP handling, validation, auth guards | `routes/core.js` |
-| **Services** | Business logic, orchestration | `AuthService`, `MemberService` |
-| **Repositories** | Database abstraction via `BaseRepository` | `repos.user.findById()` |
-| **Models** | Mongoose schemas, indexes | `models/index.js` |
+| Layer            | Responsibility                            | Example                        |
+| ---------------- | ----------------------------------------- | ------------------------------ |
+| **Routes**       | HTTP handling, validation, auth guards    | `routes/core.js`               |
+| **Services**     | Business logic, orchestration             | `AuthService`, `MemberService` |
+| **Repositories** | Database abstraction via `BaseRepository` | `repos.user.findById()`        |
+| **Models**       | Mongoose schemas, indexes                 | `models/index.js`              |
 
 ---
 
@@ -84,27 +84,27 @@ npm run dev:frontend     # or: cd Frontend && npm run dev
 
 ### Demo Logins
 
-| Role | Username | Password |
-|------|----------|----------|
-| Admin | `admin` | `admin123` |
+| Role    | Username  | Password     |
+| ------- | --------- | ------------ |
+| Admin   | `admin`   | `admin123`   |
 | Trainer | `trainer` | `trainer123` |
-| Member | `member` | `member123` |
+| Member  | `member`  | `member123`  |
 
 ### Environment Variables
 
 See [`.env.example`](.env.example) for all variables. Key ones:
 
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `MONGODB_URI` | **Yes** | — | MongoDB connection string |
-| `AUTH_SECRET` | **Yes** | — | JWT signing secret (min 8 chars) |
-| `PORT` | No | `5001` | Backend port |
-| `NODE_ENV` | No | `development` | Environment mode |
-| `JWT_EXPIRES_IN` | No | `2h` | Access token expiry |
-| `JWT_REFRESH_EXPIRES_IN` | No | `7d` | Refresh token expiry |
-| `CORS_ORIGIN` | No | `http://localhost:3000` | Allowed origins |
-| `SENTRY_DSN` | No | — | Sentry error tracking |
-| `FEATURE_FLAGS` | No | — | Comma-separated flags |
+| Variable                 | Required | Default                 | Description                      |
+| ------------------------ | -------- | ----------------------- | -------------------------------- |
+| `MONGODB_URI`            | **Yes**  | —                       | MongoDB connection string        |
+| `AUTH_SECRET`            | **Yes**  | —                       | JWT signing secret (min 8 chars) |
+| `PORT`                   | No       | `5001`                  | Backend port                     |
+| `NODE_ENV`               | No       | `development`           | Environment mode                 |
+| `JWT_EXPIRES_IN`         | No       | `2h`                    | Access token expiry              |
+| `JWT_REFRESH_EXPIRES_IN` | No       | `7d`                    | Refresh token expiry             |
+| `CORS_ORIGIN`            | No       | `http://localhost:3000` | Allowed origins                  |
+| `SENTRY_DSN`             | No       | —                       | Sentry error tracking            |
+| `FEATURE_FLAGS`          | No       | —                       | Comma-separated flags            |
 
 ---
 
@@ -116,23 +116,24 @@ docker compose logs -f app       # View logs
 docker compose down -v           # Stop & cleanup
 ```
 
-| Service | Port | Description |
-|---------|------|-------------|
-| `app` | 5001 | Node.js backend |
-| `mongo` | 27017 | MongoDB 7 |
-| `redis` | 6379 | Redis 7 (caching) |
-| `nginx` | 80/443 | Reverse proxy |
+| Service | Port   | Description       |
+| ------- | ------ | ----------------- |
+| `app`   | 5001   | Node.js backend   |
+| `mongo` | 27017  | MongoDB 7         |
+| `redis` | 6379   | Redis 7 (caching) |
+| `nginx` | 80/443 | Reverse proxy     |
 
 ---
 
 ## API Endpoints
 
 ### Auth
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/login` | Login |
-| POST | `/api/register` | Register |
-| POST | `/api/auth/refresh` | Refresh tokens |
+
+| Method | Endpoint            | Description    |
+| ------ | ------------------- | -------------- |
+| POST   | `/api/login`        | Login          |
+| POST   | `/api/register`     | Register       |
+| POST   | `/api/auth/refresh` | Refresh tokens |
 
 ### Member (`/api/me/*`) — attendance, invoices, progress, classes, tickets, notifications
 
@@ -209,4 +210,5 @@ npm run smoke             # Smoke test (DB + API)
 - Seeds run automatically once when the database is empty
 - MongoDB database is defined by `MONGODB_URI`
 - For production: set `NODE_ENV=production`, strong `AUTH_SECRET`, hosted `MONGODB_URI`, and `CORS_ORIGIN` to your frontend URL
+
 # Gym-Management-System

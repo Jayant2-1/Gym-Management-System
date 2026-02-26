@@ -34,7 +34,7 @@ api.interceptors.response.use(
       _onUnauthorized();
     }
     return Promise.reject(err);
-  }
+  },
 );
 
 export default api;

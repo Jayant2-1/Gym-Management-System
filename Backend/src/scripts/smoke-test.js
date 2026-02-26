@@ -27,7 +27,11 @@ function req(method, path, body, token) {
       res.on('data', (c) => (data += c));
       res.on('end', () => {
         let json;
-        try { json = JSON.parse(data); } catch { json = data; }
+        try {
+          json = JSON.parse(data);
+        } catch {
+          json = data;
+        }
         resolve({ status: res.statusCode, body: json });
       });
     });
@@ -65,7 +69,11 @@ async function run() {
   console.log('\n── Auth ───────────────────────────────────');
 
   const adminLogin = await req('POST', '/api/auth/login', { username: 'admin', password: 'admin123' });
-  assert('Admin login', adminLogin.status === 200 && adminLogin.body.token, `status=${adminLogin.status} body=${JSON.stringify(adminLogin.body).slice(0, 100)}`);
+  assert(
+    'Admin login',
+    adminLogin.status === 200 && adminLogin.body.token,
+    `status=${adminLogin.status} body=${JSON.stringify(adminLogin.body).slice(0, 100)}`,
+  );
   const adminToken = adminLogin.body.token;
 
   const trainerLogin = await req('POST', '/api/auth/login', { username: 'trainer', password: 'trainer123' });
@@ -110,7 +118,11 @@ async function run() {
   assert('GET /api/users/me', profile.status === 200, `status=${profile.status}`);
 
   const plans = await req('GET', '/api/membership-plans');
-  assert('GET /api/membership-plans (public)', plans.status === 200 && Array.isArray(plans.body), `status=${plans.status}`);
+  assert(
+    'GET /api/membership-plans (public)',
+    plans.status === 200 && Array.isArray(plans.body),
+    `status=${plans.status}`,
+  );
 
   // Unauthorized access
   const noAuth = await req('GET', '/api/me');
@@ -122,56 +134,110 @@ async function run() {
   console.log('\n── Member Routes ──────────────────────────');
 
   const attendance = await req('GET', '/api/me/attendance', null, memberToken);
-  assert('GET /me/attendance', attendance.status === 200 && Array.isArray(attendance.body.data), `status=${attendance.status}`);
+  assert(
+    'GET /me/attendance',
+    attendance.status === 200 && Array.isArray(attendance.body.data),
+    `status=${attendance.status}`,
+  );
 
   const checkIn = await req('POST', '/api/me/check-in', {}, memberToken);
   assert('POST /me/check-in', checkIn.status === 201 || checkIn.status === 400, `status=${checkIn.status}`);
 
   if (checkIn.status === 201) {
     const checkOut = await req('POST', '/api/me/check-out', {}, memberToken);
-    assert('POST /me/check-out', checkOut.status === 200, `status=${checkOut.status} body=${JSON.stringify(checkOut.body).slice(0, 100)}`);
+    assert(
+      'POST /me/check-out',
+      checkOut.status === 200,
+      `status=${checkOut.status} body=${JSON.stringify(checkOut.body).slice(0, 100)}`,
+    );
   }
 
   const invoices = await req('GET', '/api/me/invoices', null, memberToken);
   assert('GET /me/invoices', invoices.status === 200 && Array.isArray(invoices.body.data), `status=${invoices.status}`);
 
   const progressList = await req('GET', '/api/me/progress', null, memberToken);
-  assert('GET /me/progress', progressList.status === 200 && Array.isArray(progressList.body.data), `status=${progressList.status}`);
+  assert(
+    'GET /me/progress',
+    progressList.status === 200 && Array.isArray(progressList.body.data),
+    `status=${progressList.status}`,
+  );
 
   const addProgress = await req('POST', '/api/me/progress', { weightKg: 70, notes: 'Smoke test' }, memberToken);
-  assert('POST /me/progress', addProgress.status === 201 && addProgress.body._id, `status=${addProgress.status} body=${JSON.stringify(addProgress.body).slice(0, 150)}`);
+  assert(
+    'POST /me/progress',
+    addProgress.status === 201 && addProgress.body._id,
+    `status=${addProgress.status} body=${JSON.stringify(addProgress.body).slice(0, 150)}`,
+  );
 
   const classes = await req('GET', '/api/me/classes', null, memberToken);
   assert('GET /me/classes', classes.status === 200 && Array.isArray(classes.body.data), `status=${classes.status}`);
 
   const registrations = await req('GET', '/api/me/registrations', null, memberToken);
-  assert('GET /me/registrations', registrations.status === 200 && Array.isArray(registrations.body.data), `status=${registrations.status}`);
+  assert(
+    'GET /me/registrations',
+    registrations.status === 200 && Array.isArray(registrations.body.data),
+    `status=${registrations.status}`,
+  );
 
   const workoutPlans = await req('GET', '/api/me/workout-plans', null, memberToken);
-  assert('GET /me/workout-plans', workoutPlans.status === 200 && Array.isArray(workoutPlans.body), `status=${workoutPlans.status}`);
+  assert(
+    'GET /me/workout-plans',
+    workoutPlans.status === 200 && Array.isArray(workoutPlans.body),
+    `status=${workoutPlans.status}`,
+  );
 
   const supportCats = await req('GET', '/api/me/support-categories', null, memberToken);
-  assert('GET /me/support-categories', supportCats.status === 200 && Array.isArray(supportCats.body), `status=${supportCats.status}`);
+  assert(
+    'GET /me/support-categories',
+    supportCats.status === 200 && Array.isArray(supportCats.body),
+    `status=${supportCats.status}`,
+  );
 
   const tickets = await req('GET', '/api/me/tickets', null, memberToken);
   assert('GET /me/tickets', tickets.status === 200 && Array.isArray(tickets.body.data), `status=${tickets.status}`);
 
-  const newTicket = await req('POST', '/api/me/tickets', { title: 'Smoke Test Ticket', message: 'Testing support' }, memberToken);
-  assert('POST /me/tickets', newTicket.status === 201 && newTicket.body._id, `status=${newTicket.status} body=${JSON.stringify(newTicket.body).slice(0, 150)}`);
+  const newTicket = await req(
+    'POST',
+    '/api/me/tickets',
+    { title: 'Smoke Test Ticket', message: 'Testing support' },
+    memberToken,
+  );
+  assert(
+    'POST /me/tickets',
+    newTicket.status === 201 && newTicket.body._id,
+    `status=${newTicket.status} body=${JSON.stringify(newTicket.body).slice(0, 150)}`,
+  );
 
   if (newTicket.body._id) {
     const replies = await req('GET', `/api/me/tickets/${newTicket.body._id}/replies`, null, memberToken);
-    assert('GET /me/tickets/:id/replies', replies.status === 200 && Array.isArray(replies.body), `status=${replies.status}`);
+    assert(
+      'GET /me/tickets/:id/replies',
+      replies.status === 200 && Array.isArray(replies.body),
+      `status=${replies.status}`,
+    );
 
-    const addReply = await req('POST', `/api/me/tickets/${newTicket.body._id}/replies`, { message: 'Reply test' }, memberToken);
+    const addReply = await req(
+      'POST',
+      `/api/me/tickets/${newTicket.body._id}/replies`,
+      { message: 'Reply test' },
+      memberToken,
+    );
     assert('POST /me/tickets/:id/replies', addReply.status === 201 && addReply.body._id, `status=${addReply.status}`);
   }
 
   const notifications = await req('GET', '/api/me/notifications', null, memberToken);
-  assert('GET /me/notifications', notifications.status === 200 && Array.isArray(notifications.body.data), `status=${notifications.status}`);
+  assert(
+    'GET /me/notifications',
+    notifications.status === 200 && Array.isArray(notifications.body.data),
+    `status=${notifications.status}`,
+  );
 
   const unread = await req('GET', '/api/me/notifications/unread-count', null, memberToken);
-  assert('GET /me/notifications/unread-count', unread.status === 200 && typeof unread.body.count === 'number', `status=${unread.status}`);
+  assert(
+    'GET /me/notifications/unread-count',
+    unread.status === 200 && typeof unread.body.count === 'number',
+    `status=${unread.status}`,
+  );
 
   const markAll = await req('PATCH', '/api/me/notifications/read-all', {}, memberToken);
   assert('PATCH /me/notifications/read-all', markAll.status === 200, `status=${markAll.status}`);
@@ -185,59 +251,116 @@ async function run() {
   console.log('\n── Trainer Routes ─────────────────────────');
 
   const tSessions = await req('GET', '/api/trainer/sessions', null, trainerToken);
-  assert('GET /trainer/sessions', tSessions.status === 200 && Array.isArray(tSessions.body.data), `status=${tSessions.status}`);
+  assert(
+    'GET /trainer/sessions',
+    tSessions.status === 200 && Array.isArray(tSessions.body.data),
+    `status=${tSessions.status}`,
+  );
 
   // Need a member user ID for creating a session
   const memberId = memberLogin.body.user?.id;
   if (memberId) {
-    const newSession = await req('POST', '/api/trainer/sessions', {
-      userId: memberId,
-      sessionDate: '2026-02-15',
-      startTime: '10:00',
-      endTime: '11:00',
-      durationMinutes: 60,
-      sessionType: 'personal',
-    }, trainerToken);
-    assert('POST /trainer/sessions', newSession.status === 201 && newSession.body._id, `status=${newSession.status} body=${JSON.stringify(newSession.body).slice(0, 150)}`);
+    const newSession = await req(
+      'POST',
+      '/api/trainer/sessions',
+      {
+        userId: memberId,
+        sessionDate: '2026-02-15',
+        startTime: '10:00',
+        endTime: '11:00',
+        durationMinutes: 60,
+        sessionType: 'personal',
+      },
+      trainerToken,
+    );
+    assert(
+      'POST /trainer/sessions',
+      newSession.status === 201 && newSession.body._id,
+      `status=${newSession.status} body=${JSON.stringify(newSession.body).slice(0, 150)}`,
+    );
 
     if (newSession.body._id) {
-      const updateSession = await req('PATCH', `/api/trainer/sessions/${newSession.body._id}`, { notes: 'Updated' }, trainerToken);
+      const updateSession = await req(
+        'PATCH',
+        `/api/trainer/sessions/${newSession.body._id}`,
+        { notes: 'Updated' },
+        trainerToken,
+      );
       assert('PATCH /trainer/sessions/:id', updateSession.status === 200, `status=${updateSession.status}`);
 
       const deleteSession = await req('DELETE', `/api/trainer/sessions/${newSession.body._id}`, null, trainerToken);
-      assert('DELETE /trainer/sessions/:id', deleteSession.status === 200 && deleteSession.body.ok, `status=${deleteSession.status}`);
+      assert(
+        'DELETE /trainer/sessions/:id',
+        deleteSession.status === 200 && deleteSession.body.ok,
+        `status=${deleteSession.status}`,
+      );
     }
   }
 
   const tClasses = await req('GET', '/api/trainer/classes', null, trainerToken);
-  assert('GET /trainer/classes', tClasses.status === 200 && Array.isArray(tClasses.body.data), `status=${tClasses.status}`);
+  assert(
+    'GET /trainer/classes',
+    tClasses.status === 200 && Array.isArray(tClasses.body.data),
+    `status=${tClasses.status}`,
+  );
 
-  const newClass = await req('POST', '/api/trainer/classes', {
-    name: 'Smoke Test Class',
-    durationMinutes: 45,
-    difficultyLevel: 'beginner',
-    category: 'cardio',
-  }, trainerToken);
-  assert('POST /trainer/classes', newClass.status === 201 && newClass.body._id, `status=${newClass.status} body=${JSON.stringify(newClass.body).slice(0, 150)}`);
+  const newClass = await req(
+    'POST',
+    '/api/trainer/classes',
+    {
+      name: 'Smoke Test Class',
+      durationMinutes: 45,
+      difficultyLevel: 'beginner',
+      category: 'cardio',
+    },
+    trainerToken,
+  );
+  assert(
+    'POST /trainer/classes',
+    newClass.status === 201 && newClass.body._id,
+    `status=${newClass.status} body=${JSON.stringify(newClass.body).slice(0, 150)}`,
+  );
 
   if (newClass.body._id) {
-    const updateClass = await req('PATCH', `/api/trainer/classes/${newClass.body._id}`, { description: 'Updated desc' }, trainerToken);
+    const updateClass = await req(
+      'PATCH',
+      `/api/trainer/classes/${newClass.body._id}`,
+      { description: 'Updated desc' },
+      trainerToken,
+    );
     assert('PATCH /trainer/classes/:id', updateClass.status === 200, `status=${updateClass.status}`);
 
     // Schedule
-    const addSchedule = await req('POST', `/api/trainer/classes/${newClass.body._id}/schedules`, {
-      classDate: '2026-02-20',
-      startTime: '09:00',
-      endTime: '09:45',
-      room: 'A1',
-    }, trainerToken);
-    assert('POST /trainer/classes/:id/schedules', addSchedule.status === 201 && addSchedule.body._id, `status=${addSchedule.status}`);
+    const addSchedule = await req(
+      'POST',
+      `/api/trainer/classes/${newClass.body._id}/schedules`,
+      {
+        classDate: '2026-02-20',
+        startTime: '09:00',
+        endTime: '09:45',
+        room: 'A1',
+      },
+      trainerToken,
+    );
+    assert(
+      'POST /trainer/classes/:id/schedules',
+      addSchedule.status === 201 && addSchedule.body._id,
+      `status=${addSchedule.status}`,
+    );
 
     const listSchedules = await req('GET', `/api/trainer/classes/${newClass.body._id}/schedules`, null, trainerToken);
-    assert('GET /trainer/classes/:id/schedules', listSchedules.status === 200 && Array.isArray(listSchedules.body), `status=${listSchedules.status}`);
+    assert(
+      'GET /trainer/classes/:id/schedules',
+      listSchedules.status === 200 && Array.isArray(listSchedules.body),
+      `status=${listSchedules.status}`,
+    );
 
     const deleteClass = await req('DELETE', `/api/trainer/classes/${newClass.body._id}`, null, trainerToken);
-    assert('DELETE /trainer/classes/:id', deleteClass.status === 200 && deleteClass.body.ok, `status=${deleteClass.status}`);
+    assert(
+      'DELETE /trainer/classes/:id',
+      deleteClass.status === 200 && deleteClass.body.ok,
+      `status=${deleteClass.status}`,
+    );
   }
 
   const tProfile = await req('GET', '/api/trainer/profile', null, trainerToken);
@@ -262,24 +385,48 @@ async function run() {
   assert('GET /admin/tables', tables.status === 200 && Array.isArray(tables.body), `status=${tables.status}`);
 
   const tableData = await req('GET', '/api/admin/table/users', null, adminToken);
-  assert('GET /admin/table/users', tableData.status === 200 && Array.isArray(tableData.body.data), `status=${tableData.status}`);
+  assert(
+    'GET /admin/table/users',
+    tableData.status === 200 && Array.isArray(tableData.body.data),
+    `status=${tableData.status}`,
+  );
 
   const trainingSessions = await req('GET', '/api/admin/training-sessions', null, adminToken);
-  assert('GET /admin/training-sessions', trainingSessions.status === 200 && Array.isArray(trainingSessions.body.data), `status=${trainingSessions.status}`);
+  assert(
+    'GET /admin/training-sessions',
+    trainingSessions.status === 200 && Array.isArray(trainingSessions.body.data),
+    `status=${trainingSessions.status}`,
+  );
 
   // CRUD — use snake_case model names
   const crudList = await req('GET', '/api/admin/crud/users', null, adminToken);
-  assert('GET /admin/crud/users', crudList.status === 200 && Array.isArray(crudList.body.data), `status=${crudList.status}`);
+  assert(
+    'GET /admin/crud/users',
+    crudList.status === 200 && Array.isArray(crudList.body.data),
+    `status=${crudList.status}`,
+  );
 
   const crudPlansList = await req('GET', '/api/admin/crud/membership_plans', null, adminToken);
-  assert('GET /admin/crud/membership_plans', crudPlansList.status === 200 && Array.isArray(crudPlansList.body.data), `status=${crudPlansList.status}`);
+  assert(
+    'GET /admin/crud/membership_plans',
+    crudPlansList.status === 200 && Array.isArray(crudPlansList.body.data),
+    `status=${crudPlansList.status}`,
+  );
 
   // Analytics
   const analyticsOverview = await req('GET', '/api/admin/analytics/overview', null, adminToken);
-  assert('GET /admin/analytics/overview', analyticsOverview.status === 200 && typeof analyticsOverview.body.totalUsers === 'number', `status=${analyticsOverview.status}`);
+  assert(
+    'GET /admin/analytics/overview',
+    analyticsOverview.status === 200 && typeof analyticsOverview.body.totalUsers === 'number',
+    `status=${analyticsOverview.status}`,
+  );
 
   const analyticsDetails = await req('GET', '/api/admin/analytics/details', null, adminToken);
-  assert('GET /admin/analytics/details', analyticsDetails.status === 200 && Array.isArray(analyticsDetails.body.usersByRole), `status=${analyticsDetails.status}`);
+  assert(
+    'GET /admin/analytics/details',
+    analyticsDetails.status === 200 && Array.isArray(analyticsDetails.body.usersByRole),
+    `status=${analyticsDetails.status}`,
+  );
 
   // Admin member stats
   if (memberId) {
@@ -302,7 +449,11 @@ async function run() {
     email: `smoke_${Date.now()}@test.local`,
     password: 'Test1234',
   });
-  assert('POST /api/auth/register', register.status === 201 && register.body.token, `status=${register.status} body=${JSON.stringify(register.body).slice(0, 150)}`);
+  assert(
+    'POST /api/auth/register',
+    register.status === 201 && register.body.token,
+    `status=${register.status} body=${JSON.stringify(register.body).slice(0, 150)}`,
+  );
 
   // ═══════════════════════════════════════════════════════════
   // 8. ERROR HANDLING

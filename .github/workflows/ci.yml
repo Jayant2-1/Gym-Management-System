@@ -11,7 +11,6 @@ env:
   DOCKER_IMAGE: fitflex-gym
 
 jobs:
-
   # ─── Lint ────────────────────────────────────────────────
   lint:
     name: Lint
@@ -33,7 +32,6 @@ jobs:
 
       - name: Check Prettier formatting
         run: npm run format:check
-
 
   # ─── Backend Tests ───────────────────────────────────────
   test-backend:
@@ -71,7 +69,6 @@ jobs:
       - name: Run unit tests
         run: npm --workspace=Backend test -- --coverage --forceExit --detectOpenHandles
 
-
   # ─── Build Frontend ──────────────────────────────────────
   build-frontend:
     name: Build Frontend
@@ -91,7 +88,6 @@ jobs:
 
       - name: Build
         run: npm --workspace=Frontend run build
-
 
   # ─── Docker Build ────────────────────────────────────────
   docker:

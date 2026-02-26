@@ -35,8 +35,11 @@ class AuthService {
   }
 
   verifyToken(token) {
-    try { return jwt.verify(token, this.config.AUTH_SECRET); }
-    catch { return null; }
+    try {
+      return jwt.verify(token, this.config.AUTH_SECRET);
+    } catch {
+      return null;
+    }
   }
 
   /* ─── Login ───────────────────────────────────────────── */
@@ -58,8 +61,11 @@ class AuthService {
     user.save().catch(() => {});
 
     const tokenPayload = {
-      id: user.id, role: user.role, name: user.name,
-      email: user.email, username: user.username,
+      id: user.id,
+      role: user.role,
+      name: user.name,
+      email: user.email,
+      username: user.username,
     };
 
     const accessToken = this.signAccessToken(tokenPayload);
@@ -85,13 +91,11 @@ class AuthService {
       throw AppError.conflict(`A user with that ${field} already exists`);
     }
 
-    const defaultPlan = await this.repos.membershipPlan.findOne(
-      { status: 'active' },
-      { sort: { monthlyFee: 1 } },
-    );
+    const defaultPlan = await this.repos.membershipPlan.findOne({ status: 'active' }, { sort: { monthlyFee: 1 } });
 
     const user = await this.repos.user.create({
-      name, username,
+      name,
+      username,
       email: email.toLowerCase(),
       password,
       role: 'member',
@@ -103,16 +107,21 @@ class AuthService {
     });
 
     // Welcome notification (fire-and-forget)
-    this.repos.notification.create({
-      user: user._id,
-      title: 'Welcome to FitFlex!',
-      message: 'Your account has been created. Explore your dashboard to get started.',
-      type: 'success',
-    }).catch(() => {});
+    this.repos.notification
+      .create({
+        user: user._id,
+        title: 'Welcome to FitFlex!',
+        message: 'Your account has been created. Explore your dashboard to get started.',
+        type: 'success',
+      })
+      .catch(() => {});
 
     const tokenPayload = {
-      id: user.id, role: user.role, name: user.name,
-      email: user.email, username: user.username,
+      id: user.id,
+      role: user.role,
+      name: user.name,
+      email: user.email,
+      username: user.username,
     };
 
     const accessToken = this.signAccessToken(tokenPayload);
@@ -135,8 +144,11 @@ class AuthService {
     }
 
     const tokenPayload = {
-      id: user._id, role: user.role, name: user.name,
-      email: user.email, username: user.username,
+      id: user._id,
+      role: user.role,
+      name: user.name,
+      email: user.email,
+      username: user.username,
     };
 
     const newAccessToken = this.signAccessToken(tokenPayload);

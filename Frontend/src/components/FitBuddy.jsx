@@ -3,26 +3,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 /* ─── Tab Reactions Config ─────────────────────────────────── */
 const tabReactions = {
-  dashboard:  { msg: "Let's crush it today! 💪", eyes: 'normal' },
-  attendance: { msg: "Consistency is king! Keep showing up! 🔥", eyes: 'star' },
-  classes:    { msg: "Time to sweat! Ready? 🏋️", eyes: 'normal' },
-  workouts:   { msg: "Gains incoming! Let's go! 💪", eyes: 'star' },
-  invoices:   { msg: "Ka-ching! Money time! 💰", eyes: 'money' },
-  progress:   { msg: "Look at those gains! 📈", eyes: 'star' },
-  tickets:    { msg: "I'm here to help! 🤗", eyes: 'heart' },
-  sessions:   { msg: "Coach mode: ON! 🎯", eyes: 'normal' },
-  members:    { msg: "Let's check on the team! 👥", eyes: 'normal' },
-  billing:    { msg: "Show me the money! 💵", eyes: 'money' },
-  support:    { msg: "Let's solve this together! 🛟", eyes: 'heart' },
-  analytics:  { msg: "Data nerd mode! 📊", eyes: 'star' },
-  db:         { msg: "Ooh, the matrix! 🖥️", eyes: 'star' },
-  plans:      { msg: "Planning for success! 🎯", eyes: 'normal' },
+  dashboard: { msg: "Let's crush it today! 💪", eyes: 'normal' },
+  attendance: { msg: 'Consistency is king! Keep showing up! 🔥', eyes: 'star' },
+  classes: { msg: 'Time to sweat! Ready? 🏋️', eyes: 'normal' },
+  workouts: { msg: "Gains incoming! Let's go! 💪", eyes: 'star' },
+  invoices: { msg: 'Ka-ching! Money time! 💰', eyes: 'money' },
+  progress: { msg: 'Look at those gains! 📈', eyes: 'star' },
+  tickets: { msg: "I'm here to help! 🤗", eyes: 'heart' },
+  sessions: { msg: 'Coach mode: ON! 🎯', eyes: 'normal' },
+  members: { msg: "Let's check on the team! 👥", eyes: 'normal' },
+  billing: { msg: 'Show me the money! 💵', eyes: 'money' },
+  support: { msg: "Let's solve this together! 🛟", eyes: 'heart' },
+  analytics: { msg: 'Data nerd mode! 📊', eyes: 'star' },
+  db: { msg: 'Ooh, the matrix! 🖥️', eyes: 'star' },
+  plans: { msg: 'Planning for success! 🎯', eyes: 'normal' },
 };
 
 const roleGreetings = {
-  admin:   { greeting: "Hey Boss!", sub: "I'll watch the numbers for you!" },
-  trainer: { greeting: "Hey Coach!", sub: "Let's fire up those sessions!" },
-  member:  { greeting: "Hey Champ!", sub: "I'll be your fitness buddy!" },
+  admin: { greeting: 'Hey Boss!', sub: "I'll watch the numbers for you!" },
+  trainer: { greeting: 'Hey Coach!', sub: "Let's fire up those sessions!" },
+  member: { greeting: 'Hey Champ!', sub: "I'll be your fitness buddy!" },
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -42,7 +42,10 @@ export default function FitBuddy({ activeTab, role }) {
   const rightPupilRef = useRef(null);
   const leftShineRef = useRef(null);
   const rightShineRef = useRef(null);
-  const mouseRef = useRef({ x: typeof window !== 'undefined' ? window.innerWidth / 2 : 400, y: typeof window !== 'undefined' ? window.innerHeight / 2 : 400 });
+  const mouseRef = useRef({
+    x: typeof window !== 'undefined' ? window.innerWidth / 2 : 400,
+    y: typeof window !== 'undefined' ? window.innerHeight / 2 : 400,
+  });
   const pupilCurrent = useRef({ x: 0, y: 0 });
   const rafRef = useRef(null);
   const prevTabRef = useRef(activeTab);
@@ -51,7 +54,9 @@ export default function FitBuddy({ activeTab, role }) {
 
   /* ─── Global Mouse Tracking ──────────────────────────────── */
   useEffect(() => {
-    const handle = (e) => { mouseRef.current = { x: e.clientX, y: e.clientY }; };
+    const handle = (e) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    };
     window.addEventListener('mousemove', handle, { passive: true });
     return () => window.removeEventListener('mousemove', handle);
   }, []);
@@ -86,17 +91,25 @@ export default function FitBuddy({ activeTab, role }) {
       rafRef.current = requestAnimationFrame(update);
     };
     rafRef.current = requestAnimationFrame(update);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, [phase, eyeMode]);
 
   /* ─── Blink Timer ────────────────────────────────────────── */
   useEffect(() => {
     let id;
     const schedule = () => {
-      id = setTimeout(() => {
-        setBlink(true);
-        setTimeout(() => { setBlink(false); schedule(); }, 150);
-      }, 2500 + Math.random() * 3500);
+      id = setTimeout(
+        () => {
+          setBlink(true);
+          setTimeout(() => {
+            setBlink(false);
+            schedule();
+          }, 150);
+        },
+        2500 + Math.random() * 3500,
+      );
     };
     schedule();
     return () => clearTimeout(id);
@@ -126,7 +139,10 @@ export default function FitBuddy({ activeTab, role }) {
     clearTimeout(eyeTimerRef.current);
     bubbleTimerRef.current = setTimeout(() => setShowBubble(false), 4000);
     eyeTimerRef.current = setTimeout(() => setEyeMode('normal'), 5000);
-    return () => { clearTimeout(bubbleTimerRef.current); clearTimeout(eyeTimerRef.current); };
+    return () => {
+      clearTimeout(bubbleTimerRef.current);
+      clearTimeout(eyeTimerRef.current);
+    };
   }, [activeTab, phase]);
 
   /* ─── Click Handler ──────────────────────────────────────── */
@@ -138,7 +154,10 @@ export default function FitBuddy({ activeTab, role }) {
     setShowBubble(true);
     clearTimeout(bubbleTimerRef.current);
     clearTimeout(eyeTimerRef.current);
-    bubbleTimerRef.current = setTimeout(() => { setShowBubble(false); setClicked(false); }, 3000);
+    bubbleTimerRef.current = setTimeout(() => {
+      setShowBubble(false);
+      setClicked(false);
+    }, 3000);
     eyeTimerRef.current = setTimeout(() => setEyeMode('normal'), 4000);
   }, [activeTab]);
 
@@ -161,38 +180,95 @@ export default function FitBuddy({ activeTab, role }) {
       <svg viewBox="0 0 100 100" className="w-full h-full relative">
         {/* Headband */}
         <path d="M 15 23 Q 50 13 85 23" stroke="#f97316" strokeWidth="5" fill="none" strokeLinecap="round" />
-        <text x="50" y="22" textAnchor="middle" fill="white" fontSize="7" fontWeight="bold">★</text>
+        <text x="50" y="22" textAnchor="middle" fill="white" fontSize="7" fontWeight="bold">
+          ★
+        </text>
 
         {/* Eye whites */}
-        <motion.ellipse cx="35" cy="38" rx="12" fill="white"
-          animate={{ ry: blinking ? 1 : 13 }} transition={{ duration: 0.08 }} />
-        <motion.ellipse cx="65" cy="38" rx="12" fill="white"
-          animate={{ ry: blinking ? 1 : 13 }} transition={{ duration: 0.08 }} />
+        <motion.ellipse
+          cx="35"
+          cy="38"
+          rx="12"
+          fill="white"
+          animate={{ ry: blinking ? 1 : 13 }}
+          transition={{ duration: 0.08 }}
+        />
+        <motion.ellipse
+          cx="65"
+          cy="38"
+          rx="12"
+          fill="white"
+          animate={{ ry: blinking ? 1 : 13 }}
+          transition={{ duration: 0.08 }}
+        />
 
         {/* Pupils */}
-        {!blinking && (eyeMode === 'money' ? (
-          <>
-            <text x="35" y="44" textAnchor="middle" fill="#16a34a" fontSize="18" fontWeight="bold" style={{ fontFamily: 'system-ui' }}>$</text>
-            <text x="65" y="44" textAnchor="middle" fill="#16a34a" fontSize="18" fontWeight="bold" style={{ fontFamily: 'system-ui' }}>$</text>
-          </>
-        ) : eyeMode === 'star' ? (
-          <>
-            <text x="35" y="44" textAnchor="middle" fill="#f59e0b" fontSize="15">★</text>
-            <text x="65" y="44" textAnchor="middle" fill="#f59e0b" fontSize="15">★</text>
-          </>
-        ) : eyeMode === 'heart' ? (
-          <>
-            <text x="35" y="44" textAnchor="middle" fill="#ef4444" fontSize="14">♥</text>
-            <text x="65" y="44" textAnchor="middle" fill="#ef4444" fontSize="14">♥</text>
-          </>
-        ) : (
-          <>
-            <circle ref={withTracking ? leftPupilRef : undefined} cx="35" cy="38" r="5.5" fill="#1e293b" />
-            <circle ref={withTracking ? rightPupilRef : undefined} cx="65" cy="38" r="5.5" fill="#1e293b" />
-            <circle ref={withTracking ? leftShineRef : undefined} cx="32.5" cy="35" r="2" fill="white" opacity="0.8" />
-            <circle ref={withTracking ? rightShineRef : undefined} cx="62.5" cy="35" r="2" fill="white" opacity="0.8" />
-          </>
-        ))}
+        {!blinking &&
+          (eyeMode === 'money' ? (
+            <>
+              <text
+                x="35"
+                y="44"
+                textAnchor="middle"
+                fill="#16a34a"
+                fontSize="18"
+                fontWeight="bold"
+                style={{ fontFamily: 'system-ui' }}
+              >
+                $
+              </text>
+              <text
+                x="65"
+                y="44"
+                textAnchor="middle"
+                fill="#16a34a"
+                fontSize="18"
+                fontWeight="bold"
+                style={{ fontFamily: 'system-ui' }}
+              >
+                $
+              </text>
+            </>
+          ) : eyeMode === 'star' ? (
+            <>
+              <text x="35" y="44" textAnchor="middle" fill="#f59e0b" fontSize="15">
+                ★
+              </text>
+              <text x="65" y="44" textAnchor="middle" fill="#f59e0b" fontSize="15">
+                ★
+              </text>
+            </>
+          ) : eyeMode === 'heart' ? (
+            <>
+              <text x="35" y="44" textAnchor="middle" fill="#ef4444" fontSize="14">
+                ♥
+              </text>
+              <text x="65" y="44" textAnchor="middle" fill="#ef4444" fontSize="14">
+                ♥
+              </text>
+            </>
+          ) : (
+            <>
+              <circle ref={withTracking ? leftPupilRef : undefined} cx="35" cy="38" r="5.5" fill="#1e293b" />
+              <circle ref={withTracking ? rightPupilRef : undefined} cx="65" cy="38" r="5.5" fill="#1e293b" />
+              <circle
+                ref={withTracking ? leftShineRef : undefined}
+                cx="32.5"
+                cy="35"
+                r="2"
+                fill="white"
+                opacity="0.8"
+              />
+              <circle
+                ref={withTracking ? rightShineRef : undefined}
+                cx="62.5"
+                cy="35"
+                r="2"
+                fill="white"
+                opacity="0.8"
+              />
+            </>
+          ))}
 
         {/* Mouth */}
         {eyeMode === 'money' ? (
@@ -248,9 +324,7 @@ export default function FitBuddy({ activeTab, role }) {
                 className="bg-white rounded-2xl px-7 py-4 shadow-xl border border-slate-200 relative max-w-xs"
               >
                 <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-slate-200 rotate-45" />
-                <div className="text-slate-800 font-bold text-lg text-center">
-                  {greeting} I'm FlexBot! 💪
-                </div>
+                <div className="text-slate-800 font-bold text-lg text-center">{greeting} I'm FlexBot! 💪</div>
                 <div className="text-slate-500 text-sm text-center mt-1">{sub}</div>
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -298,22 +372,14 @@ export default function FitBuddy({ activeTab, role }) {
 
             {/* Mascot body with idle float */}
             <motion.div
-              animate={clicked
-                ? { scale: [1, 1.25, 0.9, 1.1, 1], rotate: [0, 12, -12, 5, 0] }
-                : { y: [0, -4, 0] }
-              }
-              transition={clicked
-                ? { duration: 0.5 }
-                : { repeat: Infinity, duration: 3, ease: 'easeInOut' }
-              }
+              animate={clicked ? { scale: [1, 1.25, 0.9, 1.1, 1], rotate: [0, 12, -12, 5, 0] } : { y: [0, -4, 0] }}
+              transition={clicked ? { duration: 0.5 } : { repeat: Infinity, duration: 3, ease: 'easeInOut' }}
               whileHover={{ scale: 1.12 }}
               className="relative"
             >
               {/* Glow ring */}
               <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 opacity-30 blur-sm animate-pulse" />
-              <div className="relative ring-2 ring-white rounded-full">
-                {renderFace(56, true)}
-              </div>
+              <div className="relative ring-2 ring-white rounded-full">{renderFace(56, true)}</div>
             </motion.div>
           </motion.div>
         )}

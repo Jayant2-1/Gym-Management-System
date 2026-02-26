@@ -1,7 +1,13 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { createProxyMiddleware } = (() => { try { return require('http-proxy-middleware'); } catch { return {}; } })();
+const { createProxyMiddleware } = (() => {
+  try {
+    return require('http-proxy-middleware');
+  } catch {
+    return {};
+  }
+})();
 
 const mime = {
   '.html': 'text/html',
@@ -22,14 +28,10 @@ const BACKEND = process.env.BACKEND_URL || 'http://localhost:5001';
 const server = http.createServer((req, res) => {
   // Proxy API requests to backend
   if (req.url.startsWith('/api')) {
-    const proxyReq = http.request(
-      BACKEND + req.url,
-      { method: req.method, headers: req.headers },
-      (proxyRes) => {
-        res.writeHead(proxyRes.statusCode, proxyRes.headers);
-        proxyRes.pipe(res);
-      }
-    );
+    const proxyReq = http.request(BACKEND + req.url, { method: req.method, headers: req.headers }, (proxyRes) => {
+      res.writeHead(proxyRes.statusCode, proxyRes.headers);
+      proxyRes.pipe(res);
+    });
     proxyReq.on('error', () => {
       res.writeHead(502, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Backend unavailable' }));
@@ -40,15 +42,15 @@ const server = http.createServer((req, res) => {
 
   // Serve static files
   let filePath = path.join(dist, req.url === '/' ? 'index.html' : req.url);
-  
+
   // If file doesn't exist, serve index.html (SPA fallback)
   if (!fs.existsSync(filePath)) {
     filePath = path.join(dist, 'index.html');
   }
-  
+
   const ext = path.extname(filePath);
   const contentType = mime[ext] || 'application/octet-stream';
-  
+
   try {
     const content = fs.readFileSync(filePath);
     res.writeHead(200, { 'Content-Type': contentType });

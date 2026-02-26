@@ -3,11 +3,7 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.test.js'],
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: ['/node_modules/', '/seed/', '/scripts/'],
-  collectCoverageFrom: [
-    'src/**/*.js',
-    '!src/seed/**',
-    '!src/scripts/**',
-  ],
+  collectCoverageFrom: ['src/**/*.js', '!src/seed/**', '!src/scripts/**'],
   coverageThreshold: {
     global: {
       branches: 60,

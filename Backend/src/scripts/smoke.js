@@ -79,7 +79,7 @@ async function httpJson(url, options = {}) {
   console.log(
     '[api] /api/admin/table/users',
     adminUsers.status,
-    Array.isArray(adminUsers.data) ? adminUsers.data.length : adminUsers.data
+    Array.isArray(adminUsers.data) ? adminUsers.data.length : adminUsers.data,
   );
 
   const adminTrainingSessions = await httpJson(`${base}/api/admin/training-sessions`, {
@@ -88,9 +88,7 @@ async function httpJson(url, options = {}) {
   console.log(
     '[api] /api/admin/training-sessions',
     adminTrainingSessions.status,
-    Array.isArray(adminTrainingSessions.data)
-      ? adminTrainingSessions.data.length
-      : adminTrainingSessions.data
+    Array.isArray(adminTrainingSessions.data) ? adminTrainingSessions.data.length : adminTrainingSessions.data,
   );
 
   // Extra coverage: trainer + member scoped endpoints exist and return arrays.
@@ -106,7 +104,7 @@ async function httpJson(url, options = {}) {
     console.log(
       '[api] /api/trainer/sessions',
       trainerSessions.status,
-      Array.isArray(trainerSessions.data) ? trainerSessions.data.length : trainerSessions.data
+      Array.isArray(trainerSessions.data) ? trainerSessions.data.length : trainerSessions.data,
     );
   } else {
     console.warn('[api] trainer login failed; skipping trainer endpoint checks');
@@ -124,7 +122,7 @@ async function httpJson(url, options = {}) {
     console.log(
       '[api] /api/me/attendance',
       meAttendance.status,
-      Array.isArray(meAttendance.data) ? meAttendance.data.length : meAttendance.data
+      Array.isArray(meAttendance.data) ? meAttendance.data.length : meAttendance.data,
     );
   } else {
     console.warn('[api] member login failed; skipping member endpoint checks');

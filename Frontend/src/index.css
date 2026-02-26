@@ -23,8 +23,7 @@ body {
     radial-gradient(1200px 800px at 10% -10%, rgba(99, 102, 241, 0.06), transparent 55%),
     radial-gradient(900px 600px at 90% 0%, rgba(14, 165, 233, 0.05), transparent 60%),
     radial-gradient(1000px 700px at 50% 100%, rgba(16, 185, 129, 0.04), transparent 60%),
-    radial-gradient(600px 400px at 80% 50%, rgba(168, 85, 247, 0.03), transparent 60%),
-    #f7f8fc;
+    radial-gradient(600px 400px at 80% 50%, rgba(168, 85, 247, 0.03), transparent 60%), #f7f8fc;
   min-height: 100vh;
 }
 
@@ -44,28 +43,39 @@ body {
 }
 
 .floating-orbs span:nth-child(1) {
-  width: 220px; height: 220px;
-  top: -40px; left: -30px;
+  width: 220px;
+  height: 220px;
+  top: -40px;
+  left: -30px;
   background: radial-gradient(circle, rgba(99, 102, 241, 0.4), transparent 70%);
 }
 
 .floating-orbs span:nth-child(2) {
-  width: 180px; height: 180px;
-  top: 20%; right: -20px;
+  width: 180px;
+  height: 180px;
+  top: 20%;
+  right: -20px;
   background: radial-gradient(circle, rgba(14, 165, 233, 0.35), transparent 70%);
   animation-delay: -2s;
 }
 
 .floating-orbs span:nth-child(3) {
-  width: 260px; height: 260px;
-  bottom: -60px; right: 25%;
+  width: 260px;
+  height: 260px;
+  bottom: -60px;
+  right: 25%;
   background: radial-gradient(circle, rgba(16, 185, 129, 0.35), transparent 70%);
   animation-delay: -4s;
 }
 
 @keyframes floaty {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(18px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(18px);
+  }
 }
 
 /* ─── Shine effect ────────────────────────────────────────── */
@@ -78,32 +88,48 @@ body {
   content: '';
   position: absolute;
   inset: -60% -20% auto auto;
-  width: 60%; height: 60%;
+  width: 60%;
+  height: 60%;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent 70%);
   transform: translate3d(0, 0, 0);
   animation: pulse-shine 6s ease-in-out infinite;
 }
 
 @keyframes pulse-shine {
-  0%, 100% { opacity: 0.4; transform: translate3d(10px, -10px, 0); }
-  50% { opacity: 0.9; transform: translate3d(-10px, 10px, 0); }
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translate3d(10px, -10px, 0);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate3d(-10px, 10px, 0);
+  }
 }
 
 /* ─── Interaction effects ─────────────────────────────────── */
 .magnetic {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .magnetic:hover {
   transform: translateY(-2px) scale(1.01);
-  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.10);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.1);
 }
 
 /* ─── Animated gradient bar ───────────────────────────────── */
 @keyframes gradient-x {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .animate-gradient-x {
@@ -112,9 +138,16 @@ body {
 
 /* ─── Floating animation for misc elements ────────────────── */
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-6px) rotate(0.5deg); }
-  75% { transform: translateY(4px) rotate(-0.5deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-6px) rotate(0.5deg);
+  }
+  75% {
+    transform: translateY(4px) rotate(-0.5deg);
+  }
 }
 
 .animate-float {
@@ -123,7 +156,9 @@ body {
 
 /* ─── Table row entrance ──────────────────────────────────── */
 .table-base tbody tr {
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .table-base tbody tr:hover {
@@ -132,7 +167,10 @@ body {
 
 /* ─── Card hover glow ─────────────────────────────────────── */
 .card {
-  transition: box-shadow 0.35s ease, transform 0.3s ease, border-color 0.3s ease;
+  transition:
+    box-shadow 0.35s ease,
+    transform 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .card:hover {
@@ -156,21 +194,32 @@ body {
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
   animation: card-shimmer 4s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes card-shimmer {
-  0% { left: -100%; }
-  50% { left: 120%; }
-  100% { left: 120%; }
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 120%;
+  }
+  100% {
+    left: 120%;
+  }
 }
 
 /* ─── Pulse glow for hero elements ────────────────────────── */
 @keyframes soft-pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .animate-soft-pulse {
@@ -194,12 +243,11 @@ body {
 
 .hover-lift:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.10);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
 }
 
 /* ─── Tailwind Component Layer ────────────────────────────── */
 @layer components {
-
   /* Buttons */
   .btn {
     @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm
@@ -222,7 +270,9 @@ body {
 
   .btn-primary:hover {
     background: linear-gradient(135deg, #0f172a, #1e293b);
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.1);
+    box-shadow:
+      0 4px 14px rgba(15, 23, 42, 0.18),
+      0 0 0 1px rgba(15, 23, 42, 0.1);
     transform: translateY(-1px);
   }
 
@@ -255,7 +305,9 @@ body {
   }
 
   .input:focus {
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+    box-shadow:
+      0 0 0 3px rgba(99, 102, 241, 0.08),
+      0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
   .label {

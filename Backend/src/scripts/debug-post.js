@@ -56,7 +56,12 @@ async function main() {
 
   // Test class creation
   console.log('\n--- POST /trainer/classes ---');
-  const cls = await req('POST', '/api/trainer/classes', { name: 'HIIT Class', durationMinutes: 45, description: 'Test' }, tToken);
+  const cls = await req(
+    'POST',
+    '/api/trainer/classes',
+    { name: 'HIIT Class', durationMinutes: 45, description: 'Test' },
+    tToken,
+  );
   console.log('Status:', cls.status);
   console.log('Body:', JSON.stringify(cls.body, null, 2));
 

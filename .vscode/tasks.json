@@ -1,37 +1,37 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"label": "Frontend Dev Server",
-			"type": "shell",
-			"command": "cd Frontend && npx vite --host --port 3000",
-			"isBackground": true,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Backend Server",
-			"type": "shell",
-			"command": "cd Backend && npx nodemon server.js",
-			"isBackground": true,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Frontend Dev Server",
-			"type": "shell",
-			"command": "cd Frontend && npx vite --port 3000",
-			"isBackground": true,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Backend Server",
-			"type": "shell",
-			"command": "cd Backend && node server.js",
-			"isBackground": true,
-			"problemMatcher": [],
-			"group": "build"
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Frontend Dev Server",
+      "type": "shell",
+      "command": "cd Frontend && npx vite --host --port 3000",
+      "isBackground": true,
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Backend Server",
+      "type": "shell",
+      "command": "cd Backend && npx nodemon server.js",
+      "isBackground": true,
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Frontend Dev Server",
+      "type": "shell",
+      "command": "cd Frontend && npx vite --port 3000",
+      "isBackground": true,
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Backend Server",
+      "type": "shell",
+      "command": "cd Backend && node server.js",
+      "isBackground": true,
+      "problemMatcher": [],
+      "group": "build"
+    }
+  ]
 }

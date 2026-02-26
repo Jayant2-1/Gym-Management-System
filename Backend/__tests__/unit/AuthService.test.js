@@ -89,9 +89,9 @@ describe('AuthService', () => {
 
     it('should throw on invalid user', async () => {
       repos.user.findOne.mockResolvedValue(null);
-      await expect(
-        authService.login({ email: 'nope@example.com', password: 'Password1' }),
-      ).rejects.toThrow('Invalid credentials');
+      await expect(authService.login({ email: 'nope@example.com', password: 'Password1' })).rejects.toThrow(
+        'Invalid credentials',
+      );
     });
 
     it('should throw on wrong password', async () => {
@@ -99,9 +99,9 @@ describe('AuthService', () => {
       const mockUser = buildUser({ password: hashedPw });
       repos.user.findOne.mockResolvedValue(mockUser);
 
-      await expect(
-        authService.login({ email: 'test@example.com', password: 'WrongPass1' }),
-      ).rejects.toThrow('Invalid credentials');
+      await expect(authService.login({ email: 'test@example.com', password: 'WrongPass1' })).rejects.toThrow(
+        'Invalid credentials',
+      );
     });
   });
 
@@ -118,11 +118,13 @@ describe('AuthService', () => {
     it('should register a new user successfully', async () => {
       repos.user.findOne.mockResolvedValue(null); // no existing user
       repos.membershipPlan.findOne.mockResolvedValue({ _id: 'plan-1' });
-      repos.user.create.mockResolvedValue(buildUser({
-        name: 'New User',
-        username: 'newuser',
-        email: 'new@example.com',
-      }));
+      repos.user.create.mockResolvedValue(
+        buildUser({
+          name: 'New User',
+          username: 'newuser',
+          email: 'new@example.com',
+        }),
+      );
       repos.notification.create.mockResolvedValue({});
 
       const result = await authService.register(validData);

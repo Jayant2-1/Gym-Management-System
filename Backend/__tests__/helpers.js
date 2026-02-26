@@ -35,11 +35,29 @@ function createMockRepo(overrides = {}) {
  */
 function createMockRepos(overrides = {}) {
   const repoNames = [
-    'user', 'membershipPlan', 'attendance', 'accessLog', 'invoice', 'payment',
-    'trainer', 'trainingSession', 'workoutPlan', 'exercise', 'workoutExercise',
-    'equipment', 'equipmentMaintenance', 'fitnessClass', 'classSchedule',
-    'classRegistration', 'supportCategory', 'supportTicket', 'ticketReply',
-    'memberProgress', 'gymUsageStat', 'notification', 'auditLog',
+    'user',
+    'membershipPlan',
+    'attendance',
+    'accessLog',
+    'invoice',
+    'payment',
+    'trainer',
+    'trainingSession',
+    'workoutPlan',
+    'exercise',
+    'workoutExercise',
+    'equipment',
+    'equipmentMaintenance',
+    'fitnessClass',
+    'classSchedule',
+    'classRegistration',
+    'supportCategory',
+    'supportTicket',
+    'ticketReply',
+    'memberProgress',
+    'gymUsageStat',
+    'notification',
+    'auditLog',
   ];
 
   const repos = {};

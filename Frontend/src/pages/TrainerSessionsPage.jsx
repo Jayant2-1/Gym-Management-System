@@ -5,10 +5,6 @@ import { useToast } from '../components/ToastContext';
 import api from '../services/api';
 import { motion } from 'framer-motion';
 
-function formatDate(d) {
-  if (!d) return '—';
-  return String(d);
-}
 // Removed unused formatDate function
 const emptySession = { userId: '', sessionDate: '', startTime: '', endTime: '', durationMinutes: 45, sessionType: 'personal', notes: '', cost: '' };
 

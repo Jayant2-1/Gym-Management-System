@@ -11,7 +11,7 @@ import AdminBillingPage from './pages/AdminBillingPage';
 import TrainerDashboard from './pages/TrainerDashboard';
 import MemberDashboard from './pages/MemberDashboard';
 import MembersPage from './pages/MembersPage';
-import PlaceholderPage from './pages/PlaceholderPage';
+// import PlaceholderPage from './pages/PlaceholderPage'; // Unused
 import TrainerSessionsPage from './pages/TrainerSessionsPage';
 import TrainerClassesPage from './pages/TrainerClassesPage';
 import MemberAttendancePage from './pages/MemberAttendancePage';
@@ -58,7 +58,14 @@ const roleConfig = {
   },
 };
 
+import PropTypes from 'prop-types';
+
 function PortalContent({ role, tab, onTabChange }) {
+  PortalContent.propTypes = {
+    role: PropTypes.string.isRequired,
+    tab: PropTypes.string.isRequired,
+    onTabChange: PropTypes.func.isRequired,
+  };
   if (role === 'admin') {
     if (tab === 'dashboard') return <AdminDashboard onTabChange={onTabChange} />;
     if (tab === 'db') return <AdminDatabaseExplorer />;

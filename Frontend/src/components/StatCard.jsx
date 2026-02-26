@@ -36,6 +36,14 @@ function AnimatedCounter({ value }) {
   return <>{display}</>;
 }
 
+import PropTypes from 'prop-types';
+StatCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  Icon: PropTypes.elementType,
+  colorClass: PropTypes.string,
+};
+
 /* ─── 3D Tilt Card ────────────────────────────────────────── */
 export default function StatCard({ title, value, Icon, colorClass = 'text-slate-700' }) {
   const cardRef = useRef(null);

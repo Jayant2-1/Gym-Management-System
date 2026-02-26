@@ -321,3 +321,8 @@ export default function FitBuddy({ activeTab, role }) {
     </>
   );
 }
+
+FitBuddy.propTypes = {
+  activeTab: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
+};

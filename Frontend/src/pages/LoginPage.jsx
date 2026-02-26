@@ -107,6 +107,15 @@ function ParticleField() {
   );
 }
 
+import PropTypes from 'prop-types';
+LoginPage.propTypes = {
+  password: PropTypes.string,
+  icon: PropTypes.elementType,
+  iconChar: PropTypes.string,
+  className: PropTypes.string,
+  onLogin: PropTypes.func,
+};
+
 /* ─── Glowing cursor follower (smooth RAF-based) ─────────── */
 function GlowCursor() {
   const ref = useRef(null);

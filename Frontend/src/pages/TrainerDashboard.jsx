@@ -22,6 +22,22 @@ function getGreeting() {
   return { text: 'Good Evening', emoji: '🌙', Icon: Moon, color: 'from-indigo-400 to-purple-500' };
 }
 
+import PropTypes from 'prop-types';
+TrainerDashboard.propTypes = {
+  progress: PropTypes.number,
+  size: PropTypes.number,
+  strokeWidth: PropTypes.number,
+  color: PropTypes.string,
+  label: PropTypes.string,
+  value: PropTypes.number,
+  delay: PropTypes.number,
+  targetDate: PropTypes.string,
+  sessions: PropTypes.array,
+  gradient: PropTypes.string,
+  onClick: PropTypes.func,
+  onTabChange: PropTypes.func,
+};
+
 const motivationalTips = [
   "Energy is contagious — bring yours to every session! 🔥",
   "Small wins build unstoppable momentum. Celebrate them! 🏆",

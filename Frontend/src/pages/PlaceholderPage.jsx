@@ -12,3 +12,9 @@ export default function PlaceholderPage({ title, description }) {
     </div>
   );
 }
+
+import PropTypes from 'prop-types';
+PlaceholderPage.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};

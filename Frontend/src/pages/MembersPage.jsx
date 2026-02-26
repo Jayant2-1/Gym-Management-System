@@ -283,3 +283,8 @@ export default function MembersPage({ role }) {
     </div>
   );
 }
+
+import PropTypes from 'prop-types';
+MembersPage.propTypes = {
+  role: PropTypes.string.isRequired,
+};

@@ -63,3 +63,11 @@ export default function PageShell({ title, subtitle, right, children }) {
     </motion.div>
   );
 }
+
+import PropTypes from 'prop-types';
+PageShell.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  right: PropTypes.node,
+  children: PropTypes.node,
+};

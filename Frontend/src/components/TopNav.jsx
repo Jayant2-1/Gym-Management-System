@@ -51,6 +51,16 @@ function PillIndicator({ tabs, activeTab, onTabChange }) {
   );
 }
 
+import PropTypes from 'prop-types';
+TopNav.propTypes = {
+  role: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  tabs: PropTypes.array.isRequired,
+  activeTab: PropTypes.string.isRequired,
+  onTabChange: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+};
+
 /* ─── Animated notification bell ──────────────────────────── */
 function AnimatedBell({ unread, onClick }) {
   return (

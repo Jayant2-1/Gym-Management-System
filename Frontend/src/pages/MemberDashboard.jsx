@@ -15,6 +15,21 @@ function getGreeting() {
   return { text: 'Good Evening', emoji: '🌙', Icon: Moon };
 }
 
+import PropTypes from 'prop-types';
+MemberDashboard.propTypes = {
+  bmi: PropTypes.number,
+  attendance: PropTypes.array,
+  emoji: PropTypes.string,
+  label: PropTypes.string,
+  desc: PropTypes.string,
+  unlocked: PropTypes.bool,
+  delay: PropTypes.number,
+  icon: PropTypes.elementType,
+  gradient: PropTypes.string,
+  onClick: PropTypes.func,
+  onTabChange: PropTypes.func,
+};
+
 const motivationalQuotes = [
   { text: "The only bad workout is the one that didn't happen.", author: "Unknown" },
   { text: "Strength doesn't come from what you can do. It comes from overcoming what you thought you couldn't.", author: "Rikki Rogers" },

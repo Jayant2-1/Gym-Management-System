@@ -134,3 +134,8 @@ export default function AdminDashboard({ onTabChange }) {
     </PageShell>
   );
 }
+
+import PropTypes from 'prop-types';
+AdminDashboard.propTypes = {
+  onTabChange: PropTypes.func.isRequired,
+};

@@ -24,8 +24,12 @@ const iconColors = {
 };
 
 let _id = 0;
+import PropTypes from 'prop-types';
 
 export function ToastProvider({ children }) {
+  ToastProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
   const [toasts, setToasts] = useState([]);
 
   const addToast = useCallback((message, type = 'info', duration = 4000) => {

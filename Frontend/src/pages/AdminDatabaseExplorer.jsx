@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Database, RefreshCcw, Search, Table2 } from 'lucide-react';
 import api from '../services/api';
 
@@ -65,12 +65,12 @@ export default function AdminDatabaseExplorer() {
 
   useEffect(() => {
     loadTables();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, []);
 
   useEffect(() => {
     loadRows(selectedTable);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [selectedTable]);
 
   const columns = useMemo(() => {

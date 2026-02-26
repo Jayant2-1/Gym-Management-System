@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
 import {
-  Award, Heart, Clock, Edit2, Lock, Save, X, Sparkles, Activity, ArrowRight,
-  Calendar, Flame, Target, TrendingUp, ChevronRight, Zap, FileText, LifeBuoy,
-  Sun, Moon, Sunrise, Dumbbell,
+  Award, Edit2, Lock, Save, X, Sparkles, Calendar, Flame, Target, TrendingUp, ChevronRight, Zap, FileText, LifeBuoy, Sun, Moon, Sunrise, Dumbbell,
 } from 'lucide-react';
 import PageShell from '../components/PageShell';
 import { useToast } from '../components/ToastContext';

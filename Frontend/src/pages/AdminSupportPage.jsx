@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RefreshCcw, ShieldCheck } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import PageShell from '../components/PageShell';
 import api from '../services/api';
 

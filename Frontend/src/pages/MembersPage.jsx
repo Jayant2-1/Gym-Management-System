@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Plus, RefreshCcw, Search, Trash2, ShieldCheck } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useToast } from '../components/ToastContext';
 import api from '../services/api';
 
@@ -42,7 +42,7 @@ export default function MembersPage({ role }) {
         .then((res) => setPlans(res.data || []))
         .catch(() => null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [isAdmin]);
 
   const filtered = useMemo(() => {

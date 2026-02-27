@@ -3,15 +3,18 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Install production dependencies only for backend
-COPY Backend/package.json Backend/package-lock.json* ./Backend/
-RUN cd Backend && npm ci --omit=dev
+# Copy root workspace package files
+COPY package.json package-lock.json* ./
+COPY Backend/package.json ./Backend/
+COPY Frontend/package.json ./Frontend/
 
-# Install and build frontend
-COPY Frontend/package.json Frontend/package-lock.json* ./Frontend/
-RUN cd Frontend && npm ci
+# Install backend production dependencies using workspace
+RUN npm ci --omit=dev -w Backend
+
+# Install frontend dependencies and build
+RUN npm ci -w Frontend
 COPY Frontend/ ./Frontend/
-RUN cd Frontend && npm run build
+RUN npm run build -w Frontend
 
 # ─── Stage 2: Production image ────────────────────────────────
 FROM node:20-alpine AS production
